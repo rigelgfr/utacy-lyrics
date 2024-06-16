@@ -4,20 +4,28 @@ import { data } from 'autoprefixer';
 import searchIcon from './img/search.svg';
 import songIcon from './img/disc.svg';
 import artistIcon from './img/user.svg';
+import { getLyrics, searchSong } from 'genius-lyrics-api';
 
+// spotify
 const CLIENT_ID = "7a507811507a40808833cf3ba9962c96";
 const CLIENT_SECRET = "2c86fd15ef1a41b4a58d082b8cfd135a";
 
 const YOUTUBE_DATA_API_KEY = "AIzaSyAVu-tvpt1ZFbz0nikqcNKTVt--WmEuA1Y";
 
+const GENIUS_API_KEY = "lUlvBOiGEFiAeRvnMlUzrvN34mG6JkYW0relP2TC9tbBXkYf-kayW6WOyrurWMtg"
+
 function App() {
-  const [searchType, setSearchType] = useState('song');
   const [searchTerm, setSearchTerm] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
   const [tracks, setTracks] = useState([]);
-  const [selectedTrack, setSelectedTrack] = useState(''); // Store selected track
-  const [showPopup, setShowPopup] = useState(false); // Control popup visibility
+  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [chosenTrack, setChosenTrack] = useState({
+    apiKey: GENIUS_API_KEY,
+    title: "",
+    artist: "",
+    optimizeQuery: true
+  });
 
   useEffect(() => {
     var authParameters = {
@@ -51,21 +59,8 @@ function App() {
       .then(data => { 
       console.log(data); 
       setTracks(data.tracks.items);
-     })
-    
+     }) 
   }
-
-   // Function to handle selecting a track
-  const handleTrackSelect = (track) => {
-    setSelectedTrack(track); 
-    console.log('selectedTrack after update:', selectedTrack); // Log here 
-    setShowPopup(true);
-  };
-
-  // Function to close the popup
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -87,11 +82,47 @@ function App() {
     search();
   };
 
-  const handleOutsideClick = () => {
+  const handleTrackClick = (track) => {
+    setSelectedTrack(track);
+    setChosenTrack({
+      apiKey: GENIUS_API_KEY,
+      title: track.name,
+      artist: track.artists.map(artist => artist.name).join(', '),
+      optimizeQuery: true
+    });
     setShowDropdown(false);
   };
 
+  const fetchAndLogLyrics = async () => {
+    if (chosenTrack.title && chosenTrack.artist) {
+      try {
+        const lyrics = await getLyrics(chosenTrack);
+        console.log(`Lyrics for "${chosenTrack.title}" by ${chosenTrack.artist}:\n${lyrics}`);
+      } catch (error) {
+        console.error("Error fetching lyrics:", error);
+      }
+    } else {
+      console.log("Track details are incomplete.");
+    }
+  };
+
+  const handleLogButtonClick = () => {
+    if (selectedTrack) {
+      console.log(`Song Title: ${selectedTrack.name}, Artist: ${selectedTrack.artists.map(artist => artist.name).join(', ')}`);
+      console.log(chosenTrack);
+      fetchAndLogLyrics();
+    } else {
+      console.log("No track selected");
+    }
+  };
+
   useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (event.target.closest('.dropdown-items') === null && event.target.closest('.search-bar') === null && event.target.closest('.search-button') === null) {
+        setShowDropdown(false);
+      }
+    };
+    
     document.addEventListener('mousedown', handleOutsideClick);
 
     // Cleanup: Remove the event listener when the component unmounts
@@ -107,18 +138,9 @@ function App() {
       </header>
 
       <main className="flex-grow p-6 flex items-start justify-center">
-        {/* Popup */}
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <h2>Selected Song</h2>
-              <p>Song: {selectedTrack?.name}</p> {/* Optional chaining for safety */}
-              <p>Artist: {selectedTrack?.artists[0].name}</p> {/* Optional chaining for safety */}
-              <button onClick={handleClosePopup}>Close</button>
-            </div>
-          </div>
-        )}
         
+        <button onClick={handleLogButtonClick}>Click me!</button>
+
         <div className="w-full max-w-md mt-20 relative">
           <div className='relative'>
             <input
@@ -137,18 +159,18 @@ function App() {
             </button>
           </div>
           
-            {showDropdown && (
-              <div className="absolute bg-white shadow-md w-full overflow-y-auto max-h-80">
-                <ul className="dropdown-items">
-                  {tracks.map((track, i) => (
-                    <li key={track.id} className="px-4 py-2 cursor-pointer flex items-center" onClick={() => handleTrackSelect(track)}>
-                      <span className="mr-2"><img src={track.album.images[2].url}></img></span> 
-                      <span>{track.name}</span> 
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+          {showDropdown && (
+            <div className="absolute bg-white shadow-md w-full overflow-y-auto max-h-80">
+              <ul className="dropdown-items">
+                {tracks.map((track, i) => (
+                  <li key={track.id} className="px-4 py-2 cursor-pointer flex items-center" onClick={() => handleTrackClick(track)}>
+                    <span className="mr-2"><img src={track.album.images[2].url}></img></span> 
+                    <span>{track.name}</span> 
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
         </div>
       </main>
