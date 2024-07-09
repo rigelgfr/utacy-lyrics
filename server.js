@@ -19,7 +19,7 @@ app.get('/api/lyrics', async (req, res) => {
                 q: `${title} ${artist}`
             },
             headers: {
-                'Authorization': `Bearer lUlvBOiGEFiAeRvnMlUzrvN34mG6JkYW0relP2TC9tbBXkYf-kayW6WOyrurWMtg`
+                'Authorization': `Bearer PK50B-opLNoIQ8qWe10f63rf7e_4Rh_dzhFIt7IGewCjHhQmfrhKIBy3PDgAR3zH`
             }
         });
 

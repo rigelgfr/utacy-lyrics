@@ -1,7 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { data } from 'autoprefixer';
-import searchIcon from './img/search.svg';
 
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
@@ -17,6 +16,7 @@ function App() {
   const [accessToken, setAccessToken] = useState(null);
   const [tracks, setTracks] = useState([]);
   const [selectedTrack, setSelectedTrack] = useState(null);
+  const [lyrics, setLyrics] = useState(''); // Add lyrics to state
 
   useEffect(() => {
     var authParameters = {
@@ -68,8 +68,10 @@ function App() {
   };
 
   const handleSearchClick = () => {
-    setShowDropdown(true); // Show dropdown on button click
-    search();
+    if (searchTerm.trim() !== '') {
+      setShowDropdown(true);
+      search();
+    }
   };
 
   const handleTrackClick = (track) => {
@@ -77,21 +79,7 @@ function App() {
     setShowDropdown(false);
   };
 
-  const handleLogButtonClick = () => {
-    if (selectedTrack) {
-      console.log(`Song Title: ${selectedTrack.name}, Artist: ${selectedTrack.artists.map(artist => artist.name).join(', ')}`);
-      fetchAndLogLyrics();
-    } else {
-      console.log("No track selected");
-    }
-  };
-
   async function fetchAndLogLyrics() {
-    if (!selectedTrack) {
-      console.error('No track selected');
-      return;
-    }
-
     const title = selectedTrack.name; // replace with your title
     const artist = selectedTrack.artists.map(artist => artist.name).join(', '); // Use selected track's artists
 
@@ -102,11 +90,18 @@ function App() {
             throw new Error(errorData.error);
         }
         const data = await response.json();
-        console.log(data.lyrics);
-    } catch (error) {
+        setLyrics(data.lyrics); // Set lyrics in state
+      } catch (error) {
         console.error('Error fetching lyrics:', error.message);
     }
   }
+
+  useEffect(() => {
+    if (selectedTrack) {
+      console.log(`Song Title: ${selectedTrack.name}, Artist: ${selectedTrack.artists.map(artist => artist.name).join(', ')}`);
+      fetchAndLogLyrics(selectedTrack);
+    }
+  }, [selectedTrack]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -126,26 +121,48 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-
-      <main className="flex-grow p-6 flex items-start justify-center">
-        
-        <button onClick={handleLogButtonClick}>Click me!</button>
-
-        <div className="w-full max-w-md mt-20 relative">
-          <SearchBar
+  
+      <main className="body-div">
+        <div className="w-1/5">
+          {/* Left section content */}
+        </div>
+        <div className="w-3/5 flex flex-col">
+          <div className="w-full max-w-md mt-20 mx-auto relative">
+            <SearchBar
               searchTerm={searchTerm}
               handleInputChange={handleInputChange}
               handleKeyDown={handleKeyDown}
               handleSearchClick={handleSearchClick}
             />
-          
-          {showDropdown && (
-            <Dropdown tracks={tracks} handleTrackClick={handleTrackClick} />
-          )}
+  
+            {showDropdown && (
+              <Dropdown tracks={tracks} handleTrackClick={handleTrackClick} />
+            )}
+          </div>
+          <div className="flex-grow flex items-end w-full justify-center">
+            <div className="main-box overflow-y-auto">
+              {selectedTrack ? (
+                <div className="lyrics-container">
+                  <h2 className="text-xl font-bold mb-4">{selectedTrack.name}</h2>
+                  <pre>{lyrics}</pre>
+                </div>
+              ) : (
+                <div className="placeholder-container">
+                  <p>Search for a song</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="w-1/5">
+          {/* Right section content */}
         </div>
       </main>
     </div>
   );
+  
+  
+  
 }
 
 export default App;

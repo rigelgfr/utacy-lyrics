@@ -3,7 +3,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,8 +12,23 @@
   color: white;
 }
 
+.body-div {
+  flex-grow: 1; /* flex-grow: 1; */
+  display: flex; /* flex */
+  background-size: cover;
+  background-image: url('./img/bg.jpg');
+}
+
 .search-bar {
   @apply bg-gray-700 text-white w-full px-4 py-2 rounded-md border-none focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50;
+}
+
+.dropdown-div {
+  @apply absolute shadow-md w-full overflow-y-auto max-h-80;
+}
+
+.dropdown-div::-webkit-scrollbar {
+  display: none;
 }
 
 .search-button {
@@ -23,4 +37,36 @@
 
 .dropdown-items {
   @apply divide-y divide-none bg-gray-700 bg-opacity-60;
+  z-index: 10; /* Ensure dropdown appears in front of other elements */
+  position: relative;
+  padding-top: 0.25em;
+}
+
+.main-box {
+  background-color: rgba(255, 255, 255, 0.2); /* bg-gray-700 equivalent */
+  color: #fff; /* text-white equivalent */
+  width: 90%;
+  padding: 1rem; /* p-4 equivalent */
+  min-height: 90%;
+  height: 90%;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  backdrop-filter: blur(10px);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.lyrics-container {
+  padding: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
 }

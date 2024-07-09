@@ -1,5 +1,5 @@
 const Dropdown = ({ tracks, handleTrackClick }) => (
-    <div className="absolute bg-white shadow-md w-full overflow-y-auto max-h-80">
+    <div className="dropdown-div">
       <ul className="dropdown-items">
         {tracks.map((track) => (
           <li key={track.id} className="px-4 py-2 cursor-pointer flex items-center" onClick={() => handleTrackClick(track)}>
