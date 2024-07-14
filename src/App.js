@@ -78,7 +78,7 @@ function App() {
     setSelectedTrack(track);
     setShowDropdown(false);
   };
-
+    
   async function fetchAndLogLyrics() {
     const title = selectedTrack.name; // replace with your title
     const artist = selectedTrack.artists.map(artist => artist.name).join(', '); // Use selected track's artists
@@ -90,7 +90,8 @@ function App() {
             throw new Error(errorData.error);
         }
         const data = await response.json();
-        setLyrics(data.lyrics); // Set lyrics in state
+
+        setLyrics(data.lyrics); // Set processed lyrics in state
       } catch (error) {
         console.error('Error fetching lyrics:', error.message);
     }
@@ -119,15 +120,26 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="app">
+      <div className='gradient-bg'></div>
+      
       <Header />
   
       <main className="body-div">
-        <div className="w-1/5">
-          {/* Left section content */}
+        
+
+        <div className="w-1/5 flex flex-col justify-end">
+          {selectedTrack && (
+            <img 
+              src={selectedTrack.album.images[0].url} // Assuming this URL structure
+              alt={selectedTrack.name} 
+              className="w-full h-auto rounded-lg" // Full width and responsive height
+            />
+          )}
         </div>
+
         <div className="w-3/5 flex flex-col">
-          <div className="w-full max-w-md mt-20 mx-auto relative">
+          <div className="top">
             <SearchBar
               searchTerm={searchTerm}
               handleInputChange={handleInputChange}
@@ -139,11 +151,11 @@ function App() {
               <Dropdown tracks={tracks} handleTrackClick={handleTrackClick} />
             )}
           </div>
+
           <div className="flex-grow flex items-end w-full justify-center">
             <div className="main-box overflow-y-auto">
               {selectedTrack ? (
                 <div className="lyrics-container">
-                  <h2 className="text-xl font-bold mb-4">{selectedTrack.name}</h2>
                   <pre>{lyrics}</pre>
                 </div>
               ) : (
@@ -151,9 +163,29 @@ function App() {
                   <p>Search for a song</p>
                 </div>
               )}
+
+              {/* New div for title, artist, and album */}
+              {selectedTrack && (
+                <div className="metadata-div flex">
+                  <div className="w-1/5"></div> {/* Left empty div */}
+                  <div className="w-3/5 text-center flex flex-col items-center">
+                    <h3 className="text-lg font-semibold">{selectedTrack.name}</h3>
+                    <p className="text-sm">
+                      {selectedTrack.artists.map(artist => artist.name).join(', ')} - {selectedTrack.album.name}
+                    </p>
+                  </div>
+                  <div className="w-1/5 flex justify-end">
+                    <button className="romanize-btn">
+                      Romanize
+                    </button>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
+
         <div className="w-1/5">
           {/* Right section content */}
         </div>
