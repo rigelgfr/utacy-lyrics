@@ -10,7 +10,7 @@ const port = 5000;
 
 app.use(express.json());
 
-const GENIUS_ACCESS_TOKEN = process.env.GENIUS_ACCESS_TOKEN;
+const GENIUS_ACCESS_TOKEN = process.env.REACT_APP_GENIUS_ACCESS_TOKEN;
 
 // Rate limiting configuration
 const characterLimit = 100000; // 100,000 characters
@@ -47,28 +47,14 @@ app.get('/api/search', async (req, res) => {
 });
 
 app.get('/api/lyrics', async (req, res) => {
-    const { title, artist } = req.query;
+    const { url } = req.query;
 
-    if (!title || !artist) {
-        return res.status(400).json({ error: 'Title and artist are required' });
+    if (!url) {
+        return res.status(400).json({ error: 'Track URL is required' });
     }
 
     try {
-        const response = await axios.get('https://api.genius.com/search', {
-            params: {
-                q: `${title} ${artist}`
-            },
-            headers: {
-                'Authorization': `Bearer ${GENIUS_ACCESS_TOKEN}`
-            }
-        });
-
-        if (response.data.response.hits.length === 0) {
-            return res.status(404).json({ error: 'No lyrics found' });
-        }
-
-        const songUrl = response.data.response.hits[0].result.url;
-        const lyricsResponse = await axios.get(songUrl);
+        const lyricsResponse = await axios.get(url);
         const lyrics = extractLyricsFromHtml(lyricsResponse.data);
         res.json({ lyrics });
 
