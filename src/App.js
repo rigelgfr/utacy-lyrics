@@ -5,6 +5,8 @@ import { data } from 'autoprefixer';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Dropdown from './components/Dropdown';
+import Spinner from './components/Spinner';
+import LyricsBox from './components/LyricsBox';
 
 // spotify
 const CLIENT_ID = "7a507811507a40808833cf3ba9962c96";
@@ -17,6 +19,10 @@ function App() {
   const [tracks, setTracks] = useState([]);
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [lyrics, setLyrics] = useState(''); // Add lyrics to state
+  const [romanizedLyrics, setRomanizedLyrics] = useState('');
+
+  const [isScraping, setIsScraping] = useState(false);
+  const [isRomanizing, setIsRomanizing] = useState(false);
 
   useEffect(() => {
     var authParameters = {
@@ -75,25 +81,28 @@ function App() {
   };
 
   const handleTrackClick = (track) => {
+    setIsScraping(true);
     setSelectedTrack(track);
     setShowDropdown(false);
   };
+
     
   async function fetchAndLogLyrics() {
     const title = selectedTrack.name; // replace with your title
     const artist = selectedTrack.artists.map(artist => artist.name).join(', '); // Use selected track's artists
 
     try {
-        const response = await fetch(`/api/lyrics?title=${title}&artist=${artist}`);
+        const response = await fetch(`/api/lyrics?artist=${artist}&title=${title}`);
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error);
         }
         const data = await response.json();
-
+        setIsScraping(false);
         setLyrics(data.lyrics); // Set processed lyrics in state
       } catch (error) {
         console.error('Error fetching lyrics:', error.message);
+        setLyrics("No lyrics found."); // Set default lyrics in state
     }
   }
 
@@ -119,6 +128,34 @@ function App() {
     };
   }, []);
 
+  const handleRomanizeClick = async () => {
+    setIsRomanizing(true);
+    try {
+        const response = await fetch('/api/romanize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: lyrics, sourceLanguage: 'ja' }), // Assuming the source language is Japanese
+        });
+        const data = await response.json();
+        setRomanizedLyrics(data.romanizedText);
+    } catch (error) {
+        console.error('Error romanizing lyrics:', error.message);
+    } finally {
+      setIsRomanizing(false);
+    }
+  };
+
+  useEffect(() => {
+    if (romanizedLyrics) {
+      // Replace three or more newlines with two newlines
+      const formattedLyrics = romanizedLyrics.replace(/\n{3,}/g, '\n\n').trim();
+      setLyrics(formattedLyrics); // Update the state with formatted lyrics
+    }
+  }, [romanizedLyrics]);  
+  
+  
   return (
     <div className="app">
       <div className='gradient-bg'></div>
@@ -133,13 +170,14 @@ function App() {
             <img 
               src={selectedTrack.album.images[0].url} // Assuming this URL structure
               alt={selectedTrack.name} 
-              className="w-full h-auto rounded-lg" // Full width and responsive height
+              className="w-full h-auto rounded-r-lg" // Full width and responsive height
             />
           )}
         </div>
 
         <div className="w-3/5 flex flex-col">
           <div className="top">
+            <button className="text-1xl font-bold" onClick={searchGenius}>Genius</button>
             <SearchBar
               searchTerm={searchTerm}
               handleInputChange={handleInputChange}
@@ -153,36 +191,13 @@ function App() {
           </div>
 
           <div className="flex-grow flex items-end w-full justify-center">
-            <div className="main-box overflow-y-auto">
-              {selectedTrack ? (
-                <div className="lyrics-container">
-                  <pre>{lyrics}</pre>
-                </div>
-              ) : (
-                <div className="placeholder-container">
-                  <p>Search for a song</p>
-                </div>
-              )}
-
-              {/* New div for title, artist, and album */}
-              {selectedTrack && (
-                <div className="metadata-div flex">
-                  <div className="w-1/5"></div> {/* Left empty div */}
-                  <div className="w-3/5 text-center flex flex-col items-center">
-                    <h3 className="text-lg font-semibold">{selectedTrack.name}</h3>
-                    <p className="text-sm">
-                      {selectedTrack.artists.map(artist => artist.name).join(', ')} - {selectedTrack.album.name}
-                    </p>
-                  </div>
-                  <div className="w-1/5 flex justify-end">
-                    <button className="romanize-btn">
-                      Romanize
-                    </button>
-                  </div>
-                </div>
-              )}
-
-            </div>
+            <LyricsBox 
+              selectedTrack={selectedTrack}
+              lyrics={lyrics}
+              isScraping={isScraping}
+              handleRomanizeClick={handleRomanizeClick}
+              isRomanizing={isRomanizing}
+            />
           </div>
         </div>
 

@@ -6,7 +6,7 @@ const Dropdown = ({ tracks, handleTrackClick }) => (
             <span className="mr-2">
               <img src={track.album.images[2].url} alt={track.name} />
             </span>
-            <span>{track.name}</span>
+            <span className="text-white">{track.name}</span>
           </li>
         ))}
       </ul>
