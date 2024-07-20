@@ -1,12 +1,20 @@
+import KeyGuide from './components/KeyGuide';
 import './App.css';
 import Page from './components/Page';
 import { useState, useEffect } from 'react';
 import { data } from 'autoprefixer';
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Initialize GoogleGenerativeAI with environment variable
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY); // Prefix with REACT_APP_
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY;
+const geniusAccessToken = process.env.REACT_APP_GENIUS_ACCESS_TOKEN;
+
+// Check if environment variables are set
+const envVarsSet = geminiApiKey && geniusAccessToken;
+
+const genAI = geminiApiKey ? new GoogleGenerativeAI(geminiApiKey) : null;
+const model = genAI ? genAI.getGenerativeModel({ model: "gemini-1.5-flash" }) : null;
+
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,8 +27,29 @@ function App() {
   const [isScraping, setIsScraping] = useState(false);
   const [isRomanizing, setIsRomanizing] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title, content) => {
+    setModalTitle(title);
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent(null);
+    setModalTitle('');
+  };
+
   // search with genius
   async function search() {
+    if (!envVarsSet) {
+      console.error('Environment variables are not set.');
+      return;
+    }
+
     console.log("Searching for: " + searchTerm);
 
     try {
@@ -48,15 +77,25 @@ function App() {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && searchTerm.trim() !== '') {
-      setShowDropdown(true);
-      search();
+      if (!envVarsSet) {
+        openModal('API Keys', <KeyGuide />)
+        return;
+      } else {
+        setShowDropdown(true);
+        search();
+      }
     }
   };
 
   const handleSearchClick = () => {
     if (searchTerm.trim() !== '') {
-      setShowDropdown(true);
-      search();
+      if (!envVarsSet) {
+        openModal('API Keys', <KeyGuide />)
+        return;
+      } else {
+        setShowDropdown(true);
+        search();
+      }
     }
   };
 
@@ -129,6 +168,12 @@ function App() {
   
   return (
     <Page
+      isModalOpen={isModalOpen}
+      openModal={openModal}
+      closeModal={closeModal}
+      modalTitle={modalTitle}
+      modalContent={modalContent}
+
       selectedTrack={selectedTrack}
       searchTerm={searchTerm}
       handleInputChange={handleInputChange}

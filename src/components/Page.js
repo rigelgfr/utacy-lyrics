@@ -7,10 +7,16 @@ import SearchBar from './SearchBar';
 import Dropdown from './Dropdown';
 import LyricsBox from './LyricsBox';
 import LoopingBackground from './LoopingBackground';
+import Modal from './Modal';
 
 import '../App.css';
 
 const Page = ({
+  isModalOpen,
+  openModal,
+  closeModal,
+  modalTitle,
+  modalContent,
   selectedTrack,
   searchTerm,
   handleInputChange,
@@ -26,8 +32,9 @@ const Page = ({
 }) => {
   return (
     <div className="app">
-      
-      <Header />
+      <Modal isOpen={isModalOpen} onClose={closeModal} title={modalTitle} content={modalContent} />
+
+      <Header openModal={openModal}/>
   
       <main className="body-div">
         <LoopingBackground />

@@ -5,7 +5,7 @@ const SearchBar = ({ searchTerm, handleInputChange, handleKeyDown, handleSearchC
     <input
       type="text"
       className="search-bar"
-      placeholder="Search for a song..."
+      placeholder="Search for a song or artist..."
       value={searchTerm}
       onChange={handleInputChange}
       onKeyDown={handleKeyDown}

@@ -1,11 +1,14 @@
 import React from 'react';
 
 import Spinner from './Spinner'; // Assuming Spinner is a separate component
+
+import geniusIcon from '../img/genius_icon.svg';
+
 import '../App.css';
 
 const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }) => {
     return (
-        <div className="main-box overflow-y-auto">
+        <div className="main-box overflow-y-auto scroll-smooth">
             {selectedTrack ? (
                 <div className="lyrics-container">
                     {isScraping ? (
@@ -28,8 +31,13 @@ const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }
 
             {/* New div for title, artist, and album */}
             {selectedTrack && (
-                <div className="metadata-div flex">
-                    <div className="w-1/5"></div> {/* Left empty div */}
+                <div className="metadata-div flex justify-end items-end">
+                    <div className="w-1/5">
+                        <a href={selectedTrack.url} target='_blank' rel='noopener nonreferrer'>
+                            <img src={geniusIcon} alt="Genius Page" className="w-8 h-8 ml-2 transition ease-in-out hover:scale-110 duration-200" />
+                        </a>
+                            
+                    </div> {/* Left empty div */}
                     <div className="w-3/5 text-center flex flex-col items-center">
                         <h3 className="text-lg font-semibold">{selectedTrack.title}</h3>
                         <p className="text-sm">
