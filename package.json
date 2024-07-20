@@ -3,22 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@google-cloud/translate": "^8.3.0",
     "@google/generative-ai": "^0.15.0",
-    "@headlessui/react": "^2.1.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.5",
+    "eslint-config-react-app": "^7.0.1",
     "express": "^4.19.2",
-    "express-rate-limit": "^7.3.1",
-    "genius-lyrics-api": "^3.2.1",
-    "google-auth-library": "^9.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "tailwindcss": "^3.4.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -48,7 +44,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.4"
+    "postcss": "^8.4.38"
   }
 }
