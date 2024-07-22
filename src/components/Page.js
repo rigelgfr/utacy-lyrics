@@ -26,6 +26,7 @@ const Page = ({
   tracks,
   handleTrackClick,
   lyrics,
+  isSearching,
   isScraping,
   isRomanizing,
   romanize
@@ -60,7 +61,7 @@ const Page = ({
             />
   
             {showDropdown && (
-              <Dropdown tracks={tracks} handleTrackClick={handleTrackClick} />
+              <Dropdown tracks={tracks} handleTrackClick={handleTrackClick} isSearching={isSearching}/>
             )}
           </div>
 

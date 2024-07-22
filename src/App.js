@@ -24,6 +24,7 @@ function App() {
   const [lyrics, setLyrics] = useState(''); // Add lyrics to state
   const [romanizedLyrics, setRomanizedLyrics] = useState('');
 
+  const [isSearching, setIsSearching] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
   const [isRomanizing, setIsRomanizing] = useState(false);
 
@@ -58,7 +59,8 @@ function App() {
       console.log(data); 
 
       if (response.ok) {
-        setTracks(data.tracks);
+        setTracks(data.tracks)
+        setIsSearching(false);
       } else {
         console.error('Error fetching tracks:', data.error);
         setTracks([]);
@@ -82,6 +84,7 @@ function App() {
         return;
       } else {
         setShowDropdown(true);
+        setIsSearching(true);
         search();
       }
     }
@@ -94,6 +97,7 @@ function App() {
         return;
       } else {
         setShowDropdown(true);
+        setIsSearching(true);
         search();
       }
     }
@@ -183,6 +187,8 @@ function App() {
       tracks={tracks}
       handleTrackClick={handleTrackClick}
       lyrics={lyrics}
+
+      isSearching={isSearching}
       isScraping={isScraping}
       isRomanizing={isRomanizing}
       romanize={romanize}
