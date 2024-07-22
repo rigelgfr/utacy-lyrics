@@ -70,6 +70,7 @@ function App() {
     }
   }
 
+  //always update search bar
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
     if (searchTerm.trim() === '') {
@@ -77,6 +78,7 @@ function App() {
     }
   };
 
+  //pressed 'enter' on search bar
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && searchTerm.trim() !== '') {
       if (!envVarsSet) {
@@ -90,6 +92,7 @@ function App() {
     }
   };
 
+  //search button
   const handleSearchClick = () => {
     if (searchTerm.trim() !== '') {
       if (!envVarsSet) {
@@ -103,6 +106,7 @@ function App() {
     }
   };
 
+  //dropdown option clicked
   const handleTrackClick = (track) => {
     setIsScraping(true);
     
@@ -110,6 +114,16 @@ function App() {
     setShowDropdown(false);
   };
 
+  //change title
+  useEffect(() => {
+    if (selectedTrack) {
+      document.title = `${selectedTrack.title} - ${selectedTrack.primary_artist_names} | UtacyLyrics`;
+    } else {
+      document.title = 'UtacyLyrics';
+    }
+  }, [selectedTrack]);
+  
+  //scrape lyrics using fetched url
   async function fetchLyrics(url) {
     try {
       const response = await fetch(`/api/lyrics?url=${encodeURIComponent(url)}`);

@@ -1,9 +1,9 @@
 import Spinner from './Spinner';
 
 const Dropdown = ({ tracks = [], handleTrackClick, isSearching }) => (
-  <div className="dropdown-div">
+  <div className="dropdown-div rounded-b-lg">
     {isSearching ? (
-      <div className="px-4 py-2 cursor-pointer flex items-center justify-center divide-y divide-none bg-zinc-700 bg-opacity-80 h-8">
+      <div className="px-4 py-2 cursor-pointer flex items-center justify-center divide-y divide-none bg-zinc-700 bg-opacity-80 rounded-b-lg">
         <Spinner />
       </div>
     ) : (
