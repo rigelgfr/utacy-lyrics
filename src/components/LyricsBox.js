@@ -32,19 +32,19 @@ const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }
             {/* New div for title, artist, and album */}
             {selectedTrack && (
                 <div className="metadata-div flex justify-end items-end">
-                    <div className="w-1/5">
+                    <div className="w-1/6">
                         <a href={selectedTrack.url} target='_blank' rel='noopener nonreferrer'>
                             <img src={geniusIcon} alt="Genius Page" className="w-8 h-8 ml-2 transition ease-in-out hover:scale-110 duration-200" />
                         </a>
                             
                     </div> {/* Left empty div */}
-                    <div className="w-3/5 text-center flex flex-col items-center">
+                    <div className="w-4/6 text-center flex flex-col items-center">
                         <h3 className="text-lg font-semibold">{selectedTrack.title}</h3>
                         <p className="text-sm">
                             {selectedTrack.primary_artist_names}
                         </p>
                     </div>
-                    <div className="w-1/5 flex justify-end items-end">
+                    <div className="w-1/6 flex justify-end items-end">
                         <button
                             onClick={romanize}
                             disabled={isRomanizing}
