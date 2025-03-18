@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# <img src="/img/image/logo.webp" width="30" alt="UtacyLyrics Logo" /> UtacyLyrics
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+UtacyLyrics is a music web application that allows users to search for lyrics of their favorite songs. The app also provides a feature to romanize lyrics in native characters to the Latin alphabet, creating a seamless sing-along experience for users who can't read lyrics outside of their native language.
 
-## Available Scripts
+![UtacyLyrics Banner](/src/img/image/banner3.webp)
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Lyric Search**: Find lyrics for songs across various languages and artists
+- **Lyric Romanization**: Convert lyrics in native characters to Latin alphabet for easier pronunciation
+- **User-Friendly Interface**: Simple and intuitive React-based UI
+- **Comprehensive Database**: Leverages Genius API for extensive song and lyric metadata
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Screenshots
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Empty](/src/img/screenshots/1.png)
 
-### `npm test`
+![Searched song](/src/img/screenshots/2.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Romanized lyrics](/src/img/screenshots/3.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React.js
+- TailwindCSS
+- Genius API (for song and lyric metadata)
+- Gemini API (for text romanization)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Running the Application
 
-### `npm run eject`
+Set up environment variables:
+   - Create a `.env` file in the root directory
+   - Add your API keys:
+     ```
+     REACT_APP_GENIUS_API_KEY=your_genius_api_key
+     REACT_APP_GEMINI_API_KEY=your_gemini_api_key
+     ```
+![Environment Setup](/src/img/image/env.webp)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To start the application, run the following commands:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Build the application:
+   ```
+   npm run build
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Start the server in a new terminal window:
+   ```
+   npm run server
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Start the development server:
+   ```
+   npm start
+   ```
 
-## Learn More
+4. Open your browser and navigate to `http://localhost:3000`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Integration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Genius API
+UtacyLyrics uses the Genius API to fetch song information, metadata, and lyric data. The API provides access to a vast database of songs across multiple languages and genres.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Gemini API
+The app utilizes Gemini's text generation API for romanization capabilities, allowing users to read and sing along with lyrics in unfamiliar scripts.
