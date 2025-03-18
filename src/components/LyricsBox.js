@@ -6,7 +6,7 @@ import geniusIcon from '../img/icon/genius_icon.svg';
 
 import '../App.css';
 
-const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }) => {
+const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize, isRomanized }) => {
     return (
         <div className="main-box overflow-y-auto scroll-smooth">
             {selectedTrack ? (
@@ -28,7 +28,7 @@ const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }
                     )}
                 </div>
             )}
-
+    
             {/* New div for title, artist, and album */}
             {selectedTrack && (
                 <div className="metadata-div flex justify-end items-end">
@@ -47,13 +47,13 @@ const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }
                     <div className="w-1/6 flex justify-end items-end">
                         <button
                             onClick={romanize}
-                            disabled={isRomanizing}
-                            className={`h-10 text-white bg-zinc-900 hover:bg-zinc-800 focus:ring-white transition duration-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center ${isRomanizing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            disabled={isRomanizing || isRomanized}
+                            className={`h-10 text-white bg-zinc-900 hover:bg-zinc-800 focus:ring-white transition duration-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center ${(isRomanizing || isRomanized) ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {isRomanizing && (
                                 <Spinner />
                             )}
-                            {isRomanizing ? 'Romanizing...' : 'Romanize'}
+                            {isRomanizing ? 'Romanizing...' : isRomanized ? 'Romanized' : 'Romanize'}
                         </button>
                     </div>
                 </div>

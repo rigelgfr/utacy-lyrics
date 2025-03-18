@@ -22,6 +22,7 @@ function App() {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [lyrics, setLyrics] = useState(''); // Add lyrics to state
   const [romanizedLyrics, setRomanizedLyrics] = useState('');
+  const [isRomanized, setIsRomanized] = useState(false);
 
   const [isSearching, setIsSearching] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
@@ -108,9 +109,10 @@ function App() {
   //dropdown option clicked
   const handleTrackClick = (track) => {
     setIsScraping(true);
-    
     setSelectedTrack(track);
     setShowDropdown(false);
+    setRomanizedLyrics(''); // Reset romanized lyrics
+    setIsRomanized(false); // Reset the romanized state
   };
 
   //change title
@@ -181,6 +183,7 @@ function App() {
     const response = await result.response;
     const text = response.text();
     setRomanizedLyrics(text);
+    setIsRomanized(true);
   }
   
   return (
@@ -205,6 +208,7 @@ function App() {
       isScraping={isScraping}
       isRomanizing={isRomanizing}
       romanize={romanize}
+      isRomanized={isRomanized}
     />
   );
   

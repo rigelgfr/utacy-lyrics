@@ -29,7 +29,8 @@ const Page = ({
   isSearching,
   isScraping,
   isRomanizing,
-  romanize
+  romanize,
+  isRomanized
 }) => {
   return (
     <div className="app">
@@ -72,6 +73,7 @@ const Page = ({
               isScraping={isScraping}
               isRomanizing={isRomanizing}
               romanize={romanize}
+              isRomanized={isRomanized}
             />
           </div>
         </div>
