@@ -37,7 +37,7 @@
   flex-grow: 1; /* flex-grow: 1; */
   display: flex; /* flex */
   background-size: cover;
-  background-image: url('img/bg4.jpg');
+  background-image: url('img//image/bg4.webp');
   height: calc(100% - 3rem);
 }
 

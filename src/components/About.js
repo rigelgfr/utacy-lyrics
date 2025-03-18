@@ -1,5 +1,5 @@
 import React from 'react';
-import banner from '../img/banner3.webp';
+import banner from '../img/image/banner3.webp';
 
 const About = () => (
   <div className='text-zinc-300'>

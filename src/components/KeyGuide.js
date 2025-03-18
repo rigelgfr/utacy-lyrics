@@ -1,5 +1,5 @@
 import React from 'react';
-import envImg from '../img/env.webp';
+import envImg from '../img/image/env.webp';
 
 const KeyGuide = () => (
   <div className='text-zinc-300'>

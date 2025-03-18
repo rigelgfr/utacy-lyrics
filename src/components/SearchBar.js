@@ -1,4 +1,4 @@
-import searchIcon from '../img/search.svg';
+import searchIcon from '../img/icon/search.svg';
 
 const SearchBar = ({ searchTerm, handleInputChange, handleKeyDown, handleSearchClick }) => (
   <div className='relative'>

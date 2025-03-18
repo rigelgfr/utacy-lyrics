@@ -1,8 +1,8 @@
-import keyIcon from '../img/key.svg';
-import questionIcon from '../img/help-circle.svg';
+import keyIcon from '../img/icon/key.svg';
+import questionIcon from '../img/icon/help-circle.svg';
 import KeyGuide from './KeyGuide';
 import About from './About';
-import logo from '../img/logo.webp';
+import logo from '../img/image/logo.webp';
 
 
 import '../App.css';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Spinner from './Spinner'; // Assuming Spinner is a separate component
 
-import geniusIcon from '../img/genius_icon.svg';
+import geniusIcon from '../img/icon/genius_icon.svg';
 
 import '../App.css';
 
