@@ -2,7 +2,6 @@ import KeyGuide from './components/KeyGuide';
 import './App.css';
 import Page from './components/Page';
 import { useState, useEffect } from 'react';
-import { data } from 'autoprefixer';
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 

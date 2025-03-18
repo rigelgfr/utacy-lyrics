@@ -33,7 +33,7 @@ const LyricsBox = ({ selectedTrack, lyrics, isScraping, isRomanizing, romanize }
             {selectedTrack && (
                 <div className="metadata-div flex justify-end items-end">
                     <div className="w-1/6">
-                        <a href={selectedTrack.url} target='_blank' rel='noopener nonreferrer'>
+                        <a href={selectedTrack.url} target='_blank' rel='noopener noreferrer'>
                             <img src={geniusIcon} alt="Genius Page" className="w-8 h-8 ml-2 transition ease-in-out hover:scale-110 duration-200" />
                         </a>
                             

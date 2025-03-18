@@ -2,7 +2,7 @@ import keyIcon from '../img/key.svg';
 import questionIcon from '../img/help-circle.svg';
 import KeyGuide from './KeyGuide';
 import About from './About';
-import logo from '../img/logo.jpg';
+import logo from '../img/logo.webp';
 
 
 import '../App.css';
