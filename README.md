@@ -1,4 +1,4 @@
-# <img src="/img/image/logo.webp" width="30" alt="UtacyLyrics Logo" /> UtacyLyrics
+# <img src="/src/img/image/logo.webp" width="30" alt="UtacyLyrics Logo" /> UtacyLyrics
 
 UtacyLyrics is a music web application that allows users to search for lyrics of their favorite songs. The app also provides a feature to romanize lyrics in native characters to the Latin alphabet, creating a seamless sing-along experience for users who can't read lyrics outside of their native language.
 
