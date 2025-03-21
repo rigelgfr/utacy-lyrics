@@ -36,7 +36,6 @@ Set up environment variables:
      REACT_APP_GENIUS_API_KEY=your_genius_api_key
      REACT_APP_GEMINI_API_KEY=your_gemini_api_key
      ```
-![Environment Setup](/src/img/image/env.webp)
 
 To start the application, run the following commands:
 
