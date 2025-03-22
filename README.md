@@ -13,11 +13,11 @@ UtacyLyrics is a music web application that allows users to search for lyrics of
 
 ## Screenshots
 
-![Empty](/src/img/screenshots/1.png)
+![Empty](/src/img/screenshots/1.webp)
 
-![Searched song](/src/img/screenshots/2.png)
+![Searched song](/src/img/screenshots/2.webp)
 
-![Romanized lyrics](/src/img/screenshots/3.png)
+![Romanized lyrics](/src/img/screenshots/3.webp)
 
 
 ## Tech Stack
