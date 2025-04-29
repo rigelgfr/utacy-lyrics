@@ -2,6 +2,11 @@
 
 UtacyLyrics is a music web application that allows users to search for lyrics of their favorite songs. The app also provides a feature to romanize lyrics in native characters to the Latin alphabet, creating a seamless sing-along experience for users who can't read lyrics outside of their native language.
 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/google%20gemini-8E75B2?style=flat&logo=google%20gemini&logoColor=white)
+![Genius API](https://img.shields.io/badge/Genius%20API-yellow?style=flat)
+
 ![UtacyLyrics Banner](/src/img/image/banner3.webp)
 
 ## Features
@@ -18,14 +23,6 @@ UtacyLyrics is a music web application that allows users to search for lyrics of
 ![Searched song](/src/img/screenshots/2.webp)
 
 ![Romanized lyrics](/src/img/screenshots/3.webp)
-
-
-## Tech Stack
-
-- React.js
-- TailwindCSS
-- Genius API (for song and lyric metadata)
-- Gemini API (for text romanization)
 
 ## Running the Application
 
